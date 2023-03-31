@@ -1,25 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../provider/json_provider.dart';
+import '../provider/user_provider.dart';
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class User extends StatefulWidget {
+  const User({Key? key}) : super(key: key);
 
   @override
-  State<Home> createState() => _HomeState();
+  State<User> createState() => _UserState();
 }
 
-class _HomeState extends State<Home> {
-  Json_provider? ProviderT;
-  Json_provider? ProviderF;
-
-
+class _UserState extends State<User> {
+  user_provider? uProviderT;
+  user_provider? uProviderF;
 
   @override
   Widget build(BuildContext context) {
-    ProviderT = Provider.of<Json_provider>(context, listen: true);
-    ProviderF = Provider.of<Json_provider>(context, listen: false);
+    uProviderT = Provider.of<user_provider>(context, listen: true);
+    uProviderF = Provider.of<user_provider>(context, listen: false);
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -30,14 +28,14 @@ class _HomeState extends State<Home> {
             ),
             InkWell(
               onTap: () {
-                ProviderF!.jsonPrasing();
+                uProviderF!.JsonParsing();
               },
               child: Container(
                 alignment: Alignment.center,
                 height: 50,
                 width: 100,
                 child: Text(
-                  "Post data",
+                  "User data",
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,
@@ -58,16 +56,17 @@ class _HomeState extends State<Home> {
             //   },
             //   child: Text("Show Down"),
             // ),
+
             Expanded(
               child: ListView.builder(
+                itemCount: uProviderT!.postList.length,
                 itemBuilder: (context, index) {
                   return ListTile(
-                    title: Text("${ProviderT!.postList[index].title}"),
-                    leading: Text("${ProviderT!.postList[index].id}"),
-                    subtitle: Text("${ProviderT!.postList[index].body}"),
+                    leading: Text("${uProviderT!.postList[index].id}"),
+                    title: Text("${uProviderT!.postList[index].userId}"),
+                    subtitle: Text("${uProviderT!.postList[index].title}"),
                   );
                 },
-                itemCount: ProviderF!.postList.length,
               ),
             ),
           ],
